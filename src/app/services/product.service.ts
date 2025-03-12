@@ -2,7 +2,7 @@ import { environment } from './../environments/environment.development';
 import { Injectable } from '@angular/core';
 import { SvcService } from './svc.service';
 import { Observable } from 'rxjs';
-import { Product } from '../models/product';
+import { ResponseProductDto } from '../models/DTOs/response-product-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class ProductService {
 
   productUrl: string = environment.productsEndPoint;
 
-  getProducts(): Observable<Product[]>{
-      let response = this.svc.get<Product[]>(`${this.productUrl}/GetProducts`)
+  getProducts(): Observable<ResponseProductDto[]>{
+      let response = this.svc.get<ResponseProductDto[]>(`${this.productUrl}/GetProducts`)
       return response;
   }
 

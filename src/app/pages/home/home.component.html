@@ -1,1 +1,44 @@
-<p>home works!</p>
+<header>
+<h1>SALES</h1>
+</header>
+
+<div class="container">
+@for(product of products; track product){
+<mat-card class="example-card">
+  <mat-card-header>
+      <mat-card-title>{{product.name}}</mat-card-title>
+      <mat-card-subtitle>€{{product.itemPrice}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+  @if(product.isExempt){
+    <p>Exempt</p>
+  } @else {
+    <p>Not exempt</p>
+  }
+  @if(product.isExported){
+    <p>Exported</p>
+  } @else {
+    <p>Not exported</p>
+  }
+</mat-card-content>
+
+<mat-card-actions>
+  <div class="example-button-container">
+    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addOneProduct(product)">
+      <mat-icon>plus_one</mat-icon>
+    </button>
+  </div>
+  <div class="example-button-container">
+    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="removeOneProduct(product)">
+      <mat-icon>exposure_neg_1</mat-icon>
+    </button>
+  </div>
+  <button mat-raised-button color="accent" (click)="addProductsToCart(product)">Add to cart</button>
+</mat-card-actions>
+
+</mat-card>
+}
+</div>
+
+<footer></footer>
