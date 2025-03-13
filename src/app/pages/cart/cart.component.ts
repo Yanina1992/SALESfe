@@ -7,6 +7,7 @@ import { Product } from '../../models/product';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PurchaseService } from '../../services/purchase.service';
 import { catchError, of } from 'rxjs';
+import { ResponsePurchaseDto } from '../../models/DTOs/response-purchase-dto';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,8 @@ export class CartComponent implements OnInit{
 
   cartProducts: Product[] = [];
   totalAmount: number = 0;
+
+  responsePurchase = '';
 
   constructor(
     private internalService: InternalService,
@@ -42,6 +45,7 @@ export class CartComponent implements OnInit{
   completePurchase(){
 
     let requestPurchase = new RequestPurchaseDto();
+
     requestPurchase.cartProducts = this.cartProducts;
     requestPurchase.totalAmount = this.totalAmount;
 
@@ -52,11 +56,29 @@ export class CartComponent implements OnInit{
       })
     )
     .subscribe((response) => {
-      if (response) {
-        console.log(response)
+      if (response && response.message) {
+        this.responsePurchase = response.message;
       }
     })
 
+  }
+
+  getReceipt(){
+
+    let responseReceipt = new ResponsePurchaseDto();
+
+    this.purchaseService.getPurchase()
+    .pipe(catchError((error) => {
+      console.log(error)
+      return of(null);
+      })
+    )
+    .subscribe((response) => {
+      if (response) {
+        responseReceipt = response
+        console.log(response)
+      }
+    })
   }
 
   closeDialog(){

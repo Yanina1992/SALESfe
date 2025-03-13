@@ -3,6 +3,8 @@
     <mat-card-title>Cart</mat-card-title>
     <mat-card-subtitle>Your shopping cart</mat-card-subtitle>
   </mat-card-header>
+
+  @if(!responsePurchase){
   <mat-card-content>
     @for(cartProduct of cartProducts; track cartProduct){
       <p>Product: {{cartProduct.name}}</p>
@@ -11,8 +13,18 @@
     }
     <p>Total: {{totalAmount}}</p>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button (click)="completePurchase()">Complete purchase</button>
-    <button mat-button (click)="closeDialog()">Close</button>
-  </mat-card-actions>
+
+    <mat-card-actions>
+      <button mat-button (click)="completePurchase()">Complete purchase</button>
+      <button mat-button (click)="closeDialog()">Close</button>
+    </mat-card-actions>
+
+  } @else {
+    <mat-card-actions>
+      <button mat-button (click)="getReceipt()">Get receipt</button>
+      <button mat-button (click)="closeDialog()">Close</button>
+    </mat-card-actions>
+  }
+
+
 </mat-card>
