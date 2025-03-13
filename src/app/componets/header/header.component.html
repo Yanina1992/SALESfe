@@ -5,7 +5,7 @@
   <span>Sales</span>
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="openCart()">
-    <mat-icon>shopping_cart</mat-icon>
+    <mat-icon [matBadge]="totalItems" matBadgeColor="accent" aria-hidden="false">shopping_cart</mat-icon>
   </button>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
     <mat-icon>share</mat-icon>

@@ -7,7 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { Product } from '../../models/product';
-import { RequestProductDto } from '../../models/DTOs/request-product-dto';
+import { FormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
@@ -17,7 +19,10 @@ import { RequestProductDto } from '../../models/DTOs/request-product-dto';
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -25,10 +30,7 @@ import { RequestProductDto } from '../../models/DTOs/request-product-dto';
 export class HomeComponent implements OnInit {
 
   products: Product[] = [];
-  //requestToSend: RequestProductDto[] = [];
-  requestToSend: Product[] = [];
-  //request: RequestProductDto = new RequestProductDto;
-  request: Product = new Product;
+  static requestToSend: Product[] = [];
 
   constructor(private productService: ProductService, private internalService: InternalService){}
 
@@ -43,69 +45,73 @@ export class HomeComponent implements OnInit {
     )
     .subscribe((data: any) => {
       if (data) {
-
         this.products = data;
-        console.log(this.products)
-
       }
     })
 
   }
 
-  addOneProduct(product: Product){
-
-    if(this.requestToSend.length > 0){
-
-      this.requestToSend.forEach((el) => {
-      if(el.productId == product.productId){
-        el.quantity.valueOf() + 1
-      }else{
-        this.request.productId = product.productId;
-        this.request.quantity.valueOf() + 1
-
-        this.requestToSend.push(this.request)
-      }
-      })
-
-    }else{
-      this.request.productId = product.productId;
-      this.request.quantity = this.request.quantity.valueOf() + 1;
-
-      this.requestToSend.push(this.request)
-    }
-
-  }
-
-  removeOneProduct(product: Product){
-
-    if(this.requestToSend.length > 0){
-
-      this.requestToSend.forEach((el) => {
-        if(el.productId == product.productId){
-          el.quantity.valueOf() - 1;
-        }else{
-          this.request.productId = product.productId;
-          this.request.quantity = this.request.quantity.valueOf() - 1;
-
-          this.requestToSend.push(this.request)
-        }
-      })
-
-    }else{
-          this.request.productId = product.productId;
-          this.request.quantity = this.request.quantity.valueOf() - 1;
-
-          this.requestToSend.push(this.request)
-        }
-
-  }
-
   addProductsToCart(product: Product){
 
-    this.request.productId = product.productId;
-    this.requestToSend.push(this.request)
+    let itemAlreadyExist = false;
 
-    this.internalService.cartAmount(this.requestToSend)
+    if(HomeComponent.requestToSend.length > 0){
+
+       HomeComponent.requestToSend.forEach((el) => {
+        if(el.productId == product.productId){
+        itemAlreadyExist = true;
+
+        if(Number.isNaN(el.quantity) || el.quantity == 0 || el.quantity == undefined){
+          el.quantity = 1;
+        }else{
+          if(product.quantity){
+            el.quantity += product.quantity
+          } else {
+            el.quantity += 1;
+          }
+
+          console.log(el.quantity)
+        }
+
+        }
+       })
+
+
+       if(!itemAlreadyExist){
+        let request: Product = new Product;
+        request.productId = product.productId;
+        if(product.quantity){
+          request.quantity = product.quantity + 1;
+        }else{
+          request.quantity = 1;
+        }
+
+        request.name = product.name;
+        request.itemPrice = product.itemPrice;
+
+        HomeComponent.requestToSend.push(request)
+        }
+
+
+    }else{
+      let request: Product = new Product;
+      request.productId = product.productId;
+
+      if(product.quantity){
+        request.quantity = product.quantity;
+      }else{
+        request.quantity = 1;
+      }
+
+      request.name = product.name;
+      request.itemPrice = product.itemPrice;
+
+      HomeComponent.requestToSend.push(request)
+    }
+
+    console.log(HomeComponent.requestToSend)
+
+    this.internalService.cartAmount(HomeComponent.requestToSend)
   }
 
 }

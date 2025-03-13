@@ -11,6 +11,7 @@
   </mat-card-header>
 
   <mat-card-content>
+  <div>
   @if(product.isExempt){
     <p>Exempt</p>
   } @else {
@@ -21,19 +22,11 @@
   } @else {
     <p>Not exported</p>
   }
+  </div>
+
 </mat-card-content>
 
 <mat-card-actions>
-  <div class="example-button-container">
-    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addOneProduct(product)">
-      <mat-icon>plus_one</mat-icon>
-    </button>
-  </div>
-  <div class="example-button-container">
-    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="removeOneProduct(product)">
-      <mat-icon>exposure_neg_1</mat-icon>
-    </button>
-  </div>
   <button mat-raised-button color="accent" (click)="addProductsToCart(product)">Add to cart</button>
 </mat-card-actions>
 

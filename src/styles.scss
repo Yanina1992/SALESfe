@@ -6,3 +6,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-dialog-container{
   justify-content: center;
 }
+app-header{
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  width: -webkit-fill-available;
+}
