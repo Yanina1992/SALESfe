@@ -69,8 +69,6 @@ export class HomeComponent implements OnInit {
           } else {
             el.quantity += 1;
           }
-
-          console.log(el.quantity)
         }
 
         }
@@ -88,6 +86,8 @@ export class HomeComponent implements OnInit {
 
         request.name = product.name;
         request.itemPrice = product.itemPrice;
+        request.isExempt = product.isExempt;
+        request.isExported = product.isExported;
 
         HomeComponent.requestToSend.push(request)
         }
@@ -105,11 +105,11 @@ export class HomeComponent implements OnInit {
 
       request.name = product.name;
       request.itemPrice = product.itemPrice;
+      request.isExempt = product.isExempt;
+      request.isExported = product.isExported;
 
       HomeComponent.requestToSend.push(request)
     }
-
-    console.log(HomeComponent.requestToSend)
 
     this.internalService.cartAmount(HomeComponent.requestToSend)
   }

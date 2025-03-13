@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RequestPurchaseDto } from '../models/DTOs/request-purchase-dto';
 import { Product } from '../models/product';
 import { Observable, Subject } from 'rxjs';
 
@@ -50,7 +49,6 @@ export class InternalService {
       this.requestPurchase.push(product);
     });
 
-    console.log(this.requestPurchase);
   }
 
   getTotalCount(): Observable<number> {

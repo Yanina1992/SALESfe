@@ -1,10 +1,12 @@
+import { RequestPurchaseDto } from './../../models/DTOs/request-purchase-dto';
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { InternalService } from '../../services/internal.service';
 import { Product } from '../../models/product';
-import { RequestPurchaseDto } from '../../models/DTOs/request-purchase-dto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { PurchaseService } from '../../services/purchase.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -16,10 +18,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class CartComponent implements OnInit{
 
   cartProducts: Product[] = [];
-  purchase: RequestPurchaseDto = new RequestPurchaseDto;
+  totalAmount: number = 0;
 
   constructor(
     private internalService: InternalService,
+    private purchaseService: PurchaseService,
     @Optional() public dialogRef: MatDialogRef<CartComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
@@ -29,10 +32,30 @@ export class CartComponent implements OnInit{
     if(this.internalService.requestPurchase)
     {
       this.cartProducts = this.internalService.requestPurchase
+
+      this.cartProducts.forEach((el) => {
+        this.totalAmount += el.totalPrice
+      })
     }
   }
 
   completePurchase(){
+
+    let requestPurchase = new RequestPurchaseDto();
+    requestPurchase.cartProducts = this.cartProducts;
+    requestPurchase.totalAmount = this.totalAmount;
+
+    this.purchaseService.insertPurchase(requestPurchase)
+    .pipe(catchError((error) => {
+      console.log(error)
+      return of(null);
+      })
+    )
+    .subscribe((response) => {
+      if (response) {
+        console.log(response)
+      }
+    })
 
   }
 

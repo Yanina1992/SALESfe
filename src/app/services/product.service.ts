@@ -11,7 +11,7 @@ export class ProductService {
 
   constructor(private svc: SvcService) { }
 
-  productUrl: string = environment.productsEndPoint;
+  productUrl: string = environment.productEndPoint;
 
   getProducts(): Observable<ResponseProductDto[]>{
       let response = this.svc.get<ResponseProductDto[]>(`${this.productUrl}/GetProducts`)
