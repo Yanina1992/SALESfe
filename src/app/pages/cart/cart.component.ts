@@ -22,6 +22,7 @@ export class CartComponent implements OnInit{
   totalAmount: number = 0;
 
   responsePurchase = '';
+  responseReceipt:ResponsePurchaseDto | undefined = undefined;
 
   constructor(
     private internalService: InternalService,
@@ -65,7 +66,7 @@ export class CartComponent implements OnInit{
 
   getReceipt(){
 
-    let responseReceipt = new ResponsePurchaseDto();
+    //let responseReceipt = new ResponsePurchaseDto();
 
     this.purchaseService.getPurchase()
     .pipe(catchError((error) => {
@@ -75,8 +76,8 @@ export class CartComponent implements OnInit{
     )
     .subscribe((response) => {
       if (response) {
-        responseReceipt = response
-        console.log(response)
+        this.responseReceipt = response
+        console.log(this.responseReceipt)
       }
     })
   }
