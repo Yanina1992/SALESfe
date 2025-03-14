@@ -15,9 +15,7 @@
   @if(!responsePurchase){
   <mat-card-content>
     @for(cartProduct of cartProducts; track cartProduct){
-      <p>Product: {{cartProduct.name}}</p>
-      <p>Quantity: {{cartProduct.quantity}}</p>
-      <p>Price for {{cartProduct.quantity}}: {{cartProduct.totalPrice}}</p>
+      <p>{{cartProduct.quantity}} {{cartProduct.name}} at {{cartProduct.itemPrice}}</p>
     }
     <p>Total: {{totalAmount}}</p>
   </mat-card-content>
