@@ -3,5 +3,5 @@ export class ResponseProductDto {
   name!: string;
   itemPrice!: number;
   isExempt!: boolean;
-  isExported!: boolean;
+  isImported!: boolean;
 }

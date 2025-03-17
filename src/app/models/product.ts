@@ -5,5 +5,5 @@ export class Product {
   itemPrice: number = 0;
   totalPrice: number = 0;
   isExempt!: boolean;
-  isExported!: boolean;
+  isImported!: boolean;
 }

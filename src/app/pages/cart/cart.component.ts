@@ -66,8 +66,6 @@ export class CartComponent implements OnInit{
 
   getReceipt(){
 
-    //let responseReceipt = new ResponsePurchaseDto();
-
     this.purchaseService.getPurchase()
     .pipe(catchError((error) => {
       console.log(error)

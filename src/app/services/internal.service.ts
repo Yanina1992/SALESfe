@@ -42,7 +42,7 @@ export class InternalService {
       product.quantity = el.quantity;
       product.name = el.name;
       product.itemPrice = el.itemPrice;
-      product.isExported = el.isExported;
+      product.isImported = el.isImported;
       product.isExempt = el.isExempt;
       product.totalPrice = el.totalPrice;
 

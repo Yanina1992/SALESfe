@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
         request.name = product.name;
         request.itemPrice = product.itemPrice;
         request.isExempt = product.isExempt;
-        request.isExported = product.isExported;
+        request.isImported = product.isImported;
 
         HomeComponent.requestToSend.push(request)
         }
@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
       request.name = product.name;
       request.itemPrice = product.itemPrice;
       request.isExempt = product.isExempt;
-      request.isExported = product.isExported;
+      request.isImported = product.isImported;
 
       HomeComponent.requestToSend.push(request)
     }
